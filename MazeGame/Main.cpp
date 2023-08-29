@@ -1,31 +1,38 @@
 #include <iostream>
+#include <string>
 #include "Board.h"
 #include "StartGame.h"
 
 using namespace std;
 
 int main() {
-	cout << "미로의 크기를 입력하세요. (홀수만 입력) : ";
-	int size;
+	SetConsoleTitle(TEXT("MAZE GAME OF MEMORY"));
+	system("mode con:cols=150 lines=50"); //콘솔 크기 지정
+	
+	cout << "미로의 크기를 입력하세요. (3보다 큰 홀수만 입력) : ";
+	
+	int size, score = INT_MAX;
 	cin >> size;
 
 	Board board(size);
-
 	while (true) {
-		cout << "명령을 입력하세요. (1 : 미로 게임 시작, 2 : 최단거리 확인, 3 : 미로 확인, 4 : 최단 경로 확인, 0 : 종료) : ";
+		cout << "명령을 입력하세요. (1 : 미로 게임 시작, 2 : 최단 거리 확인, 3 : 미로 확인, 4 : 최단 경로 찾기, 5 : 최단 기록 확인, 0 : 종료) : ";
 		int order;
 		cin >> order;
 
 		StartGame startGame(&board);
-
 		if (order == 1) {
 			system("cls");
-			startGame.playGame();
+
+			int cur_score = startGame.playGame();
+			score = min(score, cur_score);
 		}
-		else if (order == 2) board.bfs(true);
+		else if (order == 2) board.bfs(0, 0, true);
 		else if (order == 3) board.Draw();
-		else if (order == 4) board.search(0, 0, 0);
+		else if (order == 4) board.search();
+		else if (order == 5) cout << "\n최단 기록 : " << (score == INT_MAX ? "X" : to_string(score) + "번") << "\n\n";
 		else if (order == 0) break;
+		else cout << "명령어를 다시 입력하세요.\n\n";
 	}
 
 	cout << "미로 게임 종료\n";

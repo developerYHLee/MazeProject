@@ -34,13 +34,13 @@ private:
 	bool** isWall;
 	int _size, endRow, endCol;
 	int* move(int order, int row, int col, int vis);
-	int _input(bool);
+	int _input(bool eraseMap = false);
 	void _input_backspace(int);
 	void printArrow(int i);
 
 public:
 	StartGame(Board* board);
-	void playGame();
+	int playGame();
 };
 
 

@@ -10,16 +10,8 @@ Board::Board(int size)
 	_count = 0;
 	Initialize();
 
-	autoPath = new int* [_count];
-	for (int i = 0; i < _count; i++) {
-		autoPath[i] = new int[2]{ 0,0 };
-	}
-
-	_vis = new bool* [_size];
-	for (int i = 0; i < _size; i++) {
-		_vis[i] = new bool[_size] {};
-	}
-
+	ini_autoPath();
+	ini_vis();
 	Draw();
 }
 
@@ -79,7 +71,7 @@ void Board::Initialize()
 		endRow = rand() % _size;
 		endCol = rand() % _size;
 
-		if (!isWall[endRow][endCol] && (_count = bfs(false)) > _size) break;
+		if (!isWall[endRow][endCol] && (_count = bfs(0, 0)) > _size) break;
 	}
 }
 
@@ -129,24 +121,26 @@ int Board::getSize() { return _size; }
 bool** Board::getIsWall() { return isWall; }
 int Board::getEndRow() { return endRow; }
 int Board::getEndCol() { return endCol; }
+int Board::getBFSCount() { return _count; }
 
 //최단 거리 확인
-int Board::bfs(bool printDis) {
+//매개변수(시작 행, 시작 열, 콘솔에 출력 여부)
+int Board::bfs(int startRow, int startCol, bool printDis) {
 	bool** vis = new bool* [_size];
 	for (int i = 0; i < _size; i++) {
 		vis[i] = new bool[_size] {};
 	}
 
 	queue<Path> Q;
-	Q.push(Path(0, 0, 0));
-	vis[0][0] = true;
+	Q.push(Path(startRow, startCol, 0));
+	vis[startRow][startCol] = true;
 
 	while (!Q.empty()) {
 		Path cur = Q.front();
 		Q.pop();
 
 		if (cur._row == endRow && cur._col == endCol) {
-			if (printDis) cout << "최단시도 : " << cur._vis << "\n\n";
+			if (printDis) cout << "\n최단 거리 : " << cur._vis << "\n\n";
 			return cur._vis;
 		}
 
@@ -169,11 +163,13 @@ int Board::bfs(bool printDis) {
 }
 
 //최단 경로 확인
-bool Board::search(int row, int col, int count)
+//매개 변수(행, 열, 검색 횟수, 처음 행, 처음 열, 처음 검색 횟수)
+//처음 행과 처음 열과 처음 검색 횟수는 게임 중간에 최단 경로를 확인하기 위한 매개 변수
+bool Board::search(int row, int col, int count, int startRow, int startCol, int startCount)
 {
 	if (row == endRow && col == endCol) {
 		//autoPath를 이용한 경로 출력
-		findPath();
+		findPath(startRow, startCol, startCount);
 		return true;
 	}
 
@@ -188,7 +184,7 @@ bool Board::search(int row, int col, int count)
 
 		autoPath[count][0] = r;
 		autoPath[count][1] = c;
-		if (search(r, c, count + 1)) return true;
+		if (search(r, c, count + 1, startRow, startCol, startCount)) return true;
 	}
 
 	return false;
@@ -201,13 +197,13 @@ void Board::setStart() {
 }
 
 //최단 경로 출력
-void Board::findPath()
+void Board::findPath(int pathRow, int pathCol, int cur_count)
 {
-	int pathRow = 0, pathCol = 0;
+	cout << "\n[경로 찾기]\n";
 
-	for (int i = 0; i < _count; i++) {
+	for (int i = cur_count; i < _count; i++) {
 		int curRow = autoPath[i][0], curCol = autoPath[i][1];
-
+		
 		if (curRow == pathRow - 1) cout << "↑";
 		else if (curRow == pathRow + 1) cout << "↓";
 		else if (curCol == pathCol - 1) cout << "←";
@@ -219,10 +215,8 @@ void Board::findPath()
 
 	cout << "\n\n";
 
-	_vis = new bool* [_size];
-	for (int i = 0; i < _size; i++) {
-		_vis[i] = new bool[_size] {};
-	}
+	ini_autoPath();
+	ini_vis();
 }
 
 Board::~Board() {
@@ -234,4 +228,20 @@ Board::~Board() {
 
 	for (int i = 0; i < _size; i++) delete[] _vis[i];
 	delete[] _vis;
+}
+
+void Board::ini_vis()
+{
+	_vis = new bool* [_size];
+	for (int i = 0; i < _size; i++) {
+		_vis[i] = new bool[_size] {};
+	}
+}
+
+void Board::ini_autoPath()
+{
+	autoPath = new int* [_count];
+	for (int i = 0; i < _count; i++) {
+		autoPath[i] = new int[2]{ 0,0 };
+	}
 }

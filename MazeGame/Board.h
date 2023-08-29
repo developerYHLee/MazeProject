@@ -28,7 +28,7 @@ private:
 	int** autoPath;
 
 	void setStart();
-	void findPath();
+	void findPath(int, int, int);
 public:
 	Board(int size);
 
@@ -39,9 +39,14 @@ public:
 	bool** getIsWall();
 	int getEndRow();
 	int getEndCol();
-	int bfs(bool printDis);
-	bool search(int row, int col, int count);
+	int getBFSCount();
+	int bfs(int row, int col, bool printDis = false);
+	bool search(int row = 0, int col = 0, int count = 0, int startRow = 0, int startCol = 0, int startCount = 0);
 	~Board();
+
+private:
+	void ini_vis();
+	void ini_autoPath();
 };
 
 #endif // !__BOARD_H__

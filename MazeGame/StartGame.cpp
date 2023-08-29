@@ -66,10 +66,19 @@ void StartGame::printArrow(int i) {
 	else cout << " →";
 }
 
-void StartGame::playGame()
+int StartGame::playGame()
 {
-	int getLocate = 1;
-	cout << "미로 찾기 시작!\n위치 알림 찬스가 " << getLocate << "번 있습니다.\n현재 위치를 알고 싶으면 0을 입력하세요.\n\n";
+	int getLocate = 2, getPath = 1;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14); //폰트 노란색 변경
+	cout << "**미로 게임 START**\n\n";
+	cout << 
+		"*************************\n" <<
+		"*      Chance 횟수      *\n" <<
+		"*   0 : 위치 알림 " << getLocate << "번   *\n" <<
+		"*   1 : 경로 확인 " << getPath <<"번   *\n" <<
+		"*************************\n\n";
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15); //폰트 하얀색 변경
+	
 	Path* P = new Path(0, 0, 0);
 
 	int dx[] = { -1, 1, 0, 0 }, dy[] = { 0,0,-1,1 };
@@ -115,7 +124,7 @@ void StartGame::playGame()
 		}
 		else cout << " ) : ";
 
-		int order = _input(false);
+		int order = _input();
 
 		//현재 위치 알림 찬스 사용 시
 		if (order == 9) {
@@ -123,7 +132,6 @@ void StartGame::playGame()
 				cout << "위치 알림 찬스를 이미 모두 사용했습니다.\n\n";
 				continue;
 			}
-
 			getLocate--;
 
 			//미로 출력(현재 위치)
@@ -135,6 +143,23 @@ void StartGame::playGame()
 			_input(true);
 			continue;
 		}
+		else if (order == 10) {
+			if (getPath == 0) {
+				cout << "경로 확인 찬스를 이미 모두 사용했습니다.\n\n";
+				continue;
+			}
+			getPath--;
+
+			//경로 출력
+			int cur_count = _board->getBFSCount() - _board->bfs(curRow, curCol);
+			_board->search(curRow, curCol, cur_count, curRow, curCol, cur_count);
+			cout << "남은 경로 확인 서비스 : " << getPath << "\n엔터 시 경로 확인 종료";
+			
+			//엔터 입력 받으면 콘솔창 내용 지움
+			_input(true);
+			continue;
+		}
+
 
 		//갈림길이면 현재 저장되어 있는 갈림길 정보 최신화
 		if (pathCount > 1) P->change(curRow, curCol, order);
@@ -147,17 +172,23 @@ void StartGame::playGame()
 		vis = path[2];
 
 		count++;
-		if (curRow == endRow && curCol == endCol) {
-			cout << "미로를 빠져나왔습니다!\n";
-			break;
-		}
+		if (curRow == endRow && curCol == endCol) break;
 
 		delete path;
 	}
 
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14); //폰트 노란색 변경
+	cout << "축하합니다!\n";
+	cout << "미로를 빠져나왔습니다!\n";
 	cout << "미로를 탈출하는데 " << count << "번 시도했습니다.\n\n";
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15); //폰트 노란색 변경
+	
+	cout << "\n엔터 시 시작 화면으로 이동";
+	_input(true);
 
 	delete P;
+
+	return count;
 }
 
 //eraseMap이 true면 엔터 시 지도 지움, false면 이동 방향 입력
@@ -169,10 +200,10 @@ int StartGame::_input(bool eraseMap)
 		char ch = _getch();
 
 		if (eraseMap) {
-			if (ch != 13) continue;
-
-			system("cls");
-			return 1;
+			if (ch == 13 || ch == 10) {
+				system("cls");
+				return 1;
+			}
 		}
 
 		//엔터를 입력받고 이동 명령일 때
@@ -215,18 +246,25 @@ int StartGame::_input(bool eraseMap)
 			order = 9;
 			cout << "0";
 		}
+		//경로 찾기 찬스
+		else if (ch == '1') {
+			_input_backspace(order);
+			order = 10;
+			cout << "1";
+		}
 	}
 
 	return order;
 }
 
+//콘솔창에 기존에 출력되어 있던 글자를 지움
 void StartGame::_input_backspace(int order)
 {
 	//아무것도 입력되어 있지 않은 상태
 	if (order == -1) return;
 
 	//0이 입력됐을때
-	if (order == 9) cout << "\b \b";
+	if (order == 9 || order == 10) cout << "\b \b";
 	//방향키가 입력됐을때
 	else cout << "\b\b  \b\b";
 }
