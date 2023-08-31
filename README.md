@@ -92,8 +92,7 @@ https://github.com/developerYHLee/MazeProject/assets/82407061/c8934bf3-c06d-4068
         <br></br>  
     *  세 가지 모두 이미 구현한 기능을 재사용해서 간단하게 새로운 기능 구현
 
-<br></br>
-* 보완할 점
+### 😁보완할 점
    * Board 클래스의 기능 사용 부분이나 StartGame 클래스의 Input 받는 기능을 따로 클래스로 분리 필요(추상화 부족)
    * 더 복잡한 미로로 변경(Prim, Eller's 알고리즘)
    * 다채로운 기능 추가 필요(설명서, 퍼즐 요소 추가, 움직이는 문 등)
