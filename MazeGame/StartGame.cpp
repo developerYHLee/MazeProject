@@ -135,7 +135,8 @@ int StartGame::playGame()
 			getLocate--;
 
 			//미로 출력(현재 위치)
-			_board->Draw(curRow, curCol);
+			cout << endl;
+			_board->Draw(false, curRow, curCol);
 			cout << "현재 위치(◈) : " << curRow << "행 " << curCol << "열\n\n";
 			cout << "남은 위치 알림 서비스 : " << getLocate << "\n엔터 시 지도 삭제";
 			
@@ -150,9 +151,13 @@ int StartGame::playGame()
 			}
 			getPath--;
 
+
+			//경로 출력을 위한 값 초기화
+			_board->ini_for_search();
+
 			//경로 출력
 			int cur_count = _board->getBFSCount() - _board->bfs(curRow, curCol);
-			_board->search(curRow, curCol, cur_count, curRow, curCol, cur_count);
+			_board->search(false, curRow, curCol, cur_count, curRow, curCol, cur_count);
 			cout << "남은 경로 확인 서비스 : " << getPath << "\n엔터 시 경로 확인 종료";
 			
 			//엔터 입력 받으면 콘솔창 내용 지움
@@ -167,6 +172,13 @@ int StartGame::playGame()
 		//이동
 		int* path;
 		path = move(order, curRow, curCol, vis);
+
+		//길에 가로막힘
+		if (curRow == path[0] && curCol == path[1]) {
+			delete path;
+			continue;
+		}
+
 		curRow = path[0];
 		curCol = path[1];
 		vis = path[2];
