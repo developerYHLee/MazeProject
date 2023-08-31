@@ -68,8 +68,6 @@ https://github.com/developerYHLee/MazeProject/assets/82407061/c8934bf3-c06d-4068
 
 <br></br>
 
-
-
 ### 🔧노력한 부분
 * 기능별로 개발하도록 노력(객체화)
   *  효율적인 재사용성과 유지보수
@@ -92,18 +90,23 @@ https://github.com/developerYHLee/MazeProject/assets/82407061/c8934bf3-c06d-4068
         <br></br>  
     *  세 가지 모두 이미 구현한 기능을 재사용해서 간단하게 새로운 기능 구현
 
+<br></br>
+
 ### 😁보완할 점
    * Board 클래스의 기능 사용 부분이나 StartGame 클래스의 Input 받는 기능을 따로 클래스로 분리 필요(추상화 부족)
    * 더 복잡한 미로로 변경(Prim, Eller's 알고리즘)
    * 다채로운 기능 추가 필요(설명서, 퍼즐 요소 추가, 움직이는 문 등)
 
 <br></br>
-  
+
 ### 🛠사용한 기술
 **언어** : <img src="https://img.shields.io/badge/C++-purple?style=flat-square&logo=cplusplus&logoColor=#00599C"/>
+
+<br></br>
 
 ### 🏆배운 점
 * 객체화를 통한 재사용성 및 유지보수 역량 향상
 * 알고리즘을 프로젝트에 적용하는 능력 향상
 * C++ 활용 역량 향상
 
+<br></br>
