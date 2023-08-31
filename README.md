@@ -17,7 +17,7 @@
 ### 🎯주요 게임 기능
 설명|최단 거리
 :-:|:-:
-이미지|<img src="https://github.com/developerYHLee/MazeProject/assets/82407061/a24fe174-bd39-40e0-ba8b-727b1c5ca17f" width="850" height="50"/>
+이미지|<img src="https://github.com/developerYHLee/MazeProject/assets/82407061/a24fe174-bd39-40e0-ba8b-727b1c5ca17f" width="850" height="55"/>
 기능|입구부터 출구까지의 최단 거리
 활용 알고리즘|BFS
 
@@ -26,7 +26,7 @@
 
 설명|최단 경로
 :-:|:-:
-이미지|<img src="https://github.com/developerYHLee/MazeProject/assets/82407061/0f14ed3a-06a0-47c7-abc5-9fe9da35bfdc" width="850" height="50"/>
+이미지|<img src="https://github.com/developerYHLee/MazeProject/assets/82407061/0f14ed3a-06a0-47c7-abc5-9fe9da35bfdc" width="850" height="55"/>
 기능|입구부터 출구까지의 최단 경로
 활용 알고리즘|Backtracking
 
