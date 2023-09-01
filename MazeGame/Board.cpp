@@ -9,7 +9,7 @@ Board::Board(int size)
 	endCol = -1;
 	_count = 0;
 	Initialize();
-
+	
 	cout << endl;
 	Draw(false);
 }

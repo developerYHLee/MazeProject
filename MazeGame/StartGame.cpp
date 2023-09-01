@@ -137,7 +137,9 @@ int StartGame::playGame()
 			//미로 출력(현재 위치)
 			cout << endl;
 			_board->Draw(false, curRow, curCol);
-			cout << "현재 위치(◈) : " << curRow << "행 " << curCol << "열\n\n";
+			cout << "현재 위치(";
+			_board->print_player();
+			cout << ") : " << curRow << "행 " << curCol << "열\n\n";
 			cout << "남은 위치 알림 서비스 : " << getLocate << "\n엔터 시 지도 삭제";
 			
 			//엔터 입력 받으면 콘솔창 내용 지움

@@ -32,6 +32,7 @@ private:
 	Board* _board;
 	bool** isWall;
 	int _size, endRow, endCol;
+
 	int* move(int order, int row, int col, int vis);
 	int _input(bool eraseMap = false);
 	void _input_backspace(int);

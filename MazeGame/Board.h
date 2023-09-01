@@ -32,10 +32,13 @@ private:
 
 	void setStart();
 	void findPath(int, int, int);
+	void Initialize();
+	void ini_vis();
+	void ini_autoPath();
+
 public:
 	Board(int size);
 
-	void Initialize();
 	void Draw(bool empty,int curRow = 0, int curCol = 0);
 	int getSize();
 	bool** getIsWall();
@@ -51,10 +54,6 @@ public:
 	void print_wall(int after_color = 15);
 	void print_color_str(string, int, int after_color = 15);
 	~Board();
-
-private:
-	void ini_vis();
-	void ini_autoPath();
 };
 
 #endif // !__BOARD_H__
