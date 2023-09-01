@@ -100,7 +100,7 @@ https://github.com/developerYHLee/MazeProject/assets/82407061/c8934bf3-c06d-4068
 <br></br>
 
 ### 🛠사용한 기술
-**언어** : <img src="https://img.shields.io/badge/C++-purple?style=flat-square&logo=cplusplus&logoColor=#00599C"/>
+**언어** : <img src="https://img.shields.io/badge/C++-808080?style=flat-square&logo=cplusplus&logoColor=#00599C"/>
 
 <br></br>
 
