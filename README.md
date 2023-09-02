@@ -43,7 +43,7 @@
 
 최단 경로를 활용한 기능
 * 게임 중간에 현재 위치에서 출구까지의 경로 확인
-* AI 탈출
+* 자동 탈출
 
 <br></br>
 
@@ -53,7 +53,7 @@ https://github.com/developerYHLee/MazeProject/assets/82407061/e1ab3d5a-5886-4a79
 
 <br></br>
 
-#### AI 탈출
+#### 자동 탈출
 https://github.com/developerYHLee/MazeProject/assets/82407061/c2cc6fb9-3630-4794-b22f-06d51d6f2559
 
 <br></br>
@@ -85,7 +85,7 @@ https://github.com/developerYHLee/MazeProject/assets/82407061/c8934bf3-c06d-4068
    2. 게임 중 현재 위치에서 출구까지 경로 출력
       *  출구 대신 현재 위치부터 최단 경로 탐색
         <br></br>
-   3. AI 탈출
+   3. 자동 탈출
       *  최단 경로를 탐색하고 경로 저장 후 저장된 경로를 활용하여 AI 이동
         <br></br>  
     *  세 가지 모두 이미 구현한 기능을 재사용해서 간단하게 새로운 기능 구현
