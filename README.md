@@ -54,7 +54,7 @@ https://github.com/developerYHLee/MazeProject/assets/82407061/e1ab3d5a-5886-4a79
 <br></br>
 
 #### 자동 탈출
-https://github.com/developerYHLee/MazeProject/assets/82407061/c2cc6fb9-3630-4794-b22f-06d51d6f2559
+https://github.com/developerYHLee/MazeProject/assets/82407061/cd8125a8-9655-496c-892c-e1b976497641
 
 <br></br>
 
