@@ -23,11 +23,11 @@ void Board::Initialize()
 	_wall = new bool* [_size];
 	for (int i = 0; i < _size; i++) {
 		_wall[i] = new bool[_size];
-		fill_n(_wall[i], _size, true);
+		fill_n(_wall[i], _size, static_cast<bool>(EWallType::Wall));
 
 		if (i % 2 == 0) continue;
 
-		for (int j = 1; j < _size; j += 2) _wall[i][j] = WallType::Road;
+		for (int j = 1; j < _size; j += 2) _wall[i][j] = static_cast<bool>(EWallType::Road);
 	}
 
 	for (int i = 1; i < _size; i += 2) {
@@ -88,7 +88,7 @@ void Board::makeRoad()
 
 		int row = (parent[curPos].row + curPos.row) / 2;
 		int col = (parent[curPos].col + curPos.col) / 2;
-		_wall[row][col] = WallType::Road;
+		_wall[row][col] = static_cast<bool>(EWallType::Road);
 
 		for (const EdgeInfo& next : _edge[curPos]) {
 			Pos nextPos = next.pos;
@@ -109,7 +109,7 @@ void Board::setExit() {
 		endRow = getRand(_size);
 		endCol = getRand(_size);
 
-		if (_wall[endRow][endCol] == WallType::Road && (_count = bfs(0, 0)) > _size) break;
+		if (_wall[endRow][endCol] == static_cast<bool>(EWallType::Road) && (_count = bfs(0, 0)) > _size) break;
 	}
 }
 
@@ -127,7 +127,7 @@ void Board::Draw(bool empty, int curRow, int curCol)
 				continue;
 			}
 
-			if (_wall[i][j] == WallType::Wall) print_wall();
+			if (_wall[i][j] == static_cast<bool>(EWallType::Wall)) print_wall();
 			else cout << "  ";
 		}
 		cout << endl;
@@ -183,7 +183,7 @@ int Board::bfs(int startRow, int startCol, bool printDis) {
 			int row = cur._row + dx[i];
 			int col = cur._col + dy[i];
 
-			if (row < 0 || col < 0 || row >= _size || col >= _size || vis[row][col] || _wall[row][col] == WallType::Wall) continue;
+			if (row < 0 || col < 0 || row >= _size || col >= _size || vis[row][col] || _wall[row][col] == static_cast<bool>(EWallType::Wall)) continue;
 
 			Q.push(Path(row, col, cur._vis + 1));
 			vis[row][col] = true;
@@ -215,7 +215,7 @@ bool Board::search(bool isAI, int row, int col, int count, int startRow, int sta
 		int r = row + dx[i];
 		int c = col + dy[i];
 
-		if (r < 0 || c < 0 || r >= _size || c >= _size || _vis[r][c] || _wall[r][c] == WallType::Wall) continue;
+		if (r < 0 || c < 0 || r >= _size || c >= _size || _vis[r][c] || _wall[r][c] == static_cast<bool>(EWallType::Wall)) continue;
 
 		autoPath[count][0] = r;
 		autoPath[count][1] = c;
@@ -297,8 +297,8 @@ void Board::AIEscape()
 
 //시작 위치 설정
 void Board::setStartPos() {
-	_wall[0][0] = WallType::Road;
-	_wall[0][1] = WallType::Road;
+	_wall[0][0] = static_cast<bool>(EWallType::Road);
+	_wall[0][1] = static_cast<bool>(EWallType::Road);
 }
 
 //최단 경로 출력

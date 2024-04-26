@@ -21,7 +21,7 @@ class Board
 	
 
 private:
-	enum WallType
+	enum class EWallType
 	{
 		Road,
 		Wall
