@@ -3,7 +3,7 @@
 StartGame::StartGame(Board* board)
 {
 	_board = board;
-	isWall = board->getIsWall();
+	isWall = board->getWall();
 	_size = board->getSize();
 	endRow = board->getEndRow();
 	endCol = board->getEndCol();

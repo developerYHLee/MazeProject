@@ -24,12 +24,18 @@
     <ClCompile Include="StartGame.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="TestBoard.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="StartGame.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TestBoard.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

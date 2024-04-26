@@ -2,75 +2,114 @@
 
 Board::Board(int size)
 {
-	dx = new int[4]{ -1, 1, 0, 0 };
-	dy = new int[4]{ 0, 0, -1, 1 };
 	_size = size;
-	endRow = -1;
-	endCol = -1;
-	_count = 0;
-	Initialize();
 	
+	srand((unsigned int)time(NULL));
+	Initialize();
+
 	cout << endl;
 	Draw(false);
 }
 
 void Board::Initialize()
 {
-	srand((unsigned int)time(NULL));
+	endRow = -1;
+	endCol = -1;
+	_count = 0;
 
-	if (_size % 2 == 0) {
-		cout << "홀수를 입력해주세요.\n\n";
-		return;
+	dx = new int[4]{ -1, 1, 0, 0 };
+	dy = new int[4]{ 0, 0, -1, 1 };
+
+	_wall = new bool* [_size];
+	for (int i = 0; i < _size; i++) {
+		_wall[i] = new bool[_size];
+		fill_n(_wall[i], _size, true);
+
+		if (i % 2 == 0) continue;
+
+		for (int j = 1; j < _size; j += 2) _wall[i][j] = WallType::Road;
 	}
 
-	//isWall 배열 false로 초기화
-	isWall = new bool* [_size];
-	for (int i = 0; i < _size; i++) {
-		isWall[i] = new bool[_size] {};
-	}
-
-	//행이나 열이 짝수면 벽으로 설정
-	for (int i = 0; i < _size; i++) {
-		for (int j = 0; j < _size; j++) {
-			if (i % 2 == 0 || j % 2 == 0) isWall[i][j] = true;
+	for (int i = 1; i < _size; i += 2) {
+		for (int j = 1; j < _size; j += 2) {
+			_visRoad[Pos(i, j)] = false;
+			_minCost[Pos(i, j)] = INT_MAX;
 		}
 	}
 
-	//SideWinder 미로 생성 알고리즘
-	for (int i = 0; i < _size; i++) {
-		int count = 1;
-		for (int j = 0; j < _size; j++) {
-			if (i % 2 == 0 || j % 2 == 0) continue;
-			if (i == _size - 2 && j == _size - 2) continue;
+	makeEdge();
+	makeRoad();
 
-			if (i == _size - 2) {
-				isWall[i][j + 1] = false;
-				continue;
-			}
-			if (j == _size - 2) {
-				isWall[i + 1][j] = false;
-				continue;
+	setStartPos();
+	setExit();
+}
+
+void Board::makeEdge()
+{
+	for (int row = 1; row < _size; row += 2) {
+		for (int col = 1; col < _size; col += 2) {
+			if (row < _size - 2) {
+				int r = getRand();
+				Pos u(row, col);
+				Pos v(row + 2, col);
+				_edge[u].push_back(EdgeInfo(v, r));
+				_edge[v].push_back(EdgeInfo(u, r));
 			}
 
-			int road = rand() % 2;
-			if (road == 0) {
-				isWall[i][j + 1] = false;
-				count++;
-			}
-			else {
-				int random = rand() % count;
-				isWall[i + 1][j - random * 2] = false;
-				count = 1;
+			if (col < _size - 2) {
+				int r = getRand();
+				Pos u(row, col);
+				Pos v(row, col + 2);
+				_edge[u].push_back(EdgeInfo(v, r));
+				_edge[v].push_back(EdgeInfo(u, r));
 			}
 		}
 	}
+}
 
-	setStart();
+void Board::makeRoad()
+{
+	priority_queue<EdgeInfo> PQ;
+	PQ.push(EdgeInfo(Pos(1, 1), 0));
+	_minCost[Pos(1, 1)] = 0;
+
+	map<Pos, Pos> parent;
+	parent[Pos(1, 1)] = Pos(1, 1);
+
+	while (!PQ.empty()) {
+		EdgeInfo node = PQ.top();
+		PQ.pop();
+
+		Pos curPos = node.pos;
+		int curCost = node.cost;
+
+		if (_visRoad[curPos]) continue;
+		_visRoad[curPos] = true;
+
+		int row = (parent[curPos].row + curPos.row) / 2;
+		int col = (parent[curPos].col + curPos.col) / 2;
+		_wall[row][col] = WallType::Road;
+
+		for (const EdgeInfo& next : _edge[curPos]) {
+			Pos nextPos = next.pos;
+			int nextCost = next.cost;
+
+			if (_visRoad[nextPos] || _minCost[nextPos] < curCost) continue;
+
+			parent[nextPos] = curPos;
+			_minCost[nextPos] = nextCost;
+
+			PQ.push(next);
+		}
+	}
+}
+
+void Board::setExit() {
 	while (true) {
-		endRow = rand() % _size;
-		endCol = rand() % _size;
+		endRow = getRand(_size);
+		endCol = getRand(_size);
 
-		if (!isWall[endRow][endCol] && (_count = bfs(0, 0)) > _size) break;
+		if (_wall[endRow][endCol] == WallType::Road && (_count = bfs(0, 0)) > _size) break;
 	}
 }
 
@@ -88,7 +127,7 @@ void Board::Draw(bool empty, int curRow, int curCol)
 				continue;
 			}
 
-			if (isWall[i][j]) print_wall();
+			if (_wall[i][j] == WallType::Wall) print_wall();
 			else cout << "  ";
 		}
 		cout << endl;
@@ -114,7 +153,7 @@ void Board::Draw(bool empty, int curRow, int curCol)
 }
 
 int Board::getSize() { return _size; }
-bool** Board::getIsWall() { return isWall; }
+bool** Board::getWall() { return _wall; }
 int Board::getEndRow() { return endRow; }
 int Board::getEndCol() { return endCol; }
 int Board::getBFSCount() { return _count; }
@@ -144,7 +183,7 @@ int Board::bfs(int startRow, int startCol, bool printDis) {
 			int row = cur._row + dx[i];
 			int col = cur._col + dy[i];
 
-			if (row < 0 || col < 0 || row >= _size || col >= _size || vis[row][col] || isWall[row][col]) continue;
+			if (row < 0 || col < 0 || row >= _size || col >= _size || vis[row][col] || _wall[row][col] == WallType::Wall) continue;
 
 			Q.push(Path(row, col, cur._vis + 1));
 			vis[row][col] = true;
@@ -159,7 +198,7 @@ int Board::bfs(int startRow, int startCol, bool printDis) {
 }
 
 //최단 경로 확인
-//매개 변수(행, 열, 검색 횟수, 처음 행, 처음 열, 처음 검색 횟수)
+//매개 변수(자동 탐색 여부, 행, 열, 검색 횟수, 처음 행, 처음 열, 처음 검색 횟수)
 //처음 행과 처음 열과 처음 검색 횟수는 게임 중간에 최단 경로를 확인하기 위한 매개 변수
 bool Board::search(bool isAI, int row, int col, int count, int startRow, int startCol, int startCount)
 {
@@ -176,7 +215,7 @@ bool Board::search(bool isAI, int row, int col, int count, int startRow, int sta
 		int r = row + dx[i];
 		int c = col + dy[i];
 
-		if (r < 0 || c < 0 || r >= _size || c >= _size || isWall[r][c] || _vis[r][c]) continue;
+		if (r < 0 || c < 0 || r >= _size || c >= _size || _vis[r][c] || _wall[r][c] == WallType::Wall) continue;
 
 		autoPath[count][0] = r;
 		autoPath[count][1] = c;
@@ -257,9 +296,9 @@ void Board::AIEscape()
 }
 
 //시작 위치 설정
-void Board::setStart() {
-	isWall[0][0] = false;
-	isWall[0][1] = false;
+void Board::setStartPos() {
+	_wall[0][0] = WallType::Road;
+	_wall[0][1] = WallType::Road;
 }
 
 //최단 경로 출력
@@ -298,6 +337,11 @@ void Board::ini_autoPath()
 	for (int i = 0; i < _count; i++) {
 		autoPath[i] = new int[2]{ 0,0 };
 	}
+}
+
+int Board::getRand(int r)
+{
+	return rand() % r;
 }
 
 //경로 탐색을 위해 저장되어 있는 값들 초기화
@@ -340,8 +384,8 @@ Board::~Board() {
 	for (int i = 0; i < _count; i++) delete[] autoPath[i];
 	delete[] autoPath;
 
-	for (int i = 0; i < _size; i++) delete[] isWall[i];
-	delete[] isWall;
+	for (int i = 0; i < _size; i++) delete[] _wall[i];
+	delete[] _wall;
 
 	for (int i = 0; i < _size; i++) delete[] _vis[i];
 	delete[] _vis;
