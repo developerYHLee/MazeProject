@@ -81,6 +81,7 @@ https://github.com/developerYHLee/MazeProject/assets/82407061/4eb23bb4-e1eb-4515
       *  최단 경로를 탐색하고 경로 저장 후 저장된 경로를 활용하여 자동 이동
         <br></br>  
     *  세 가지 모두 이미 구현한 기능을 재사용해서 간단하게 새로운 기능 구현
+   <br></br>
    
    4. 미로 생성 알고리즘 변경
       *  더 복잡한 미로 생성을 위해 SideWinder -> Prim 알고리즘으로 변경
