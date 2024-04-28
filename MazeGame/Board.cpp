@@ -94,7 +94,7 @@ void Board::makeRoad()
 			Pos nextPos = next.pos;
 			int nextCost = next.cost;
 
-			if (_visRoad[nextPos] || _minCost[nextPos] < curCost) continue;
+			if (_visRoad[nextPos] || _minCost[nextPos] < nextCost) continue;
 
 			parent[nextPos] = curPos;
 			_minCost[nextPos] = nextCost;
@@ -104,6 +104,11 @@ void Board::makeRoad()
 	}
 }
 
+void Board::setStartPos() {
+	_wall[0][0] = static_cast<bool>(EWallType::Road);
+	_wall[0][1] = static_cast<bool>(EWallType::Road);
+}
+
 void Board::setExit() {
 	while (true) {
 		endRow = getRand(_size);
@@ -111,6 +116,11 @@ void Board::setExit() {
 
 		if (_wall[endRow][endCol] == static_cast<bool>(EWallType::Road) && (_count = bfs(0, 0)) > _size) break;
 	}
+}
+
+int Board::getRand(int r)
+{
+	return rand() % r;
 }
 
 //미로 출력(현재 위치)
@@ -295,12 +305,6 @@ void Board::AIEscape()
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor_info);
 }
 
-//시작 위치 설정
-void Board::setStartPos() {
-	_wall[0][0] = static_cast<bool>(EWallType::Road);
-	_wall[0][1] = static_cast<bool>(EWallType::Road);
-}
-
 //최단 경로 출력
 void Board::findPath(int pathRow, int pathCol, int cur_count)
 {
@@ -337,11 +341,6 @@ void Board::ini_autoPath()
 	for (int i = 0; i < _count; i++) {
 		autoPath[i] = new int[2]{ 0,0 };
 	}
-}
-
-int Board::getRand(int r)
-{
-	return rand() % r;
 }
 
 //경로 탐색을 위해 저장되어 있는 값들 초기화

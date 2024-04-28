@@ -13,7 +13,7 @@
 using namespace std;
 
 class TestBoard {
-	enum RoadType
+	enum class ERoadType
 	{
 		Wall,
 		Road

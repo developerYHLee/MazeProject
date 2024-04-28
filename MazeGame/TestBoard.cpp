@@ -4,6 +4,7 @@ TestBoard::TestBoard(int size)
 {
 	_size = size;
 
+	srand((unsigned int)time(NULL));
 	Initialize();
 
 	cout << "\n";
@@ -19,7 +20,7 @@ void TestBoard::Initialize()
 	_edge = new vector<EdgeInfo>* [_size];
 
 	for (int i = 0; i < _size; i++) {
-		_road[i] = new bool[_size] {RoadType::Wall};
+		_road[i] = new bool[_size] {static_cast<bool>(ERoadType::Wall)};
 		_visRoad[i] = new bool[_size] {false};
 
 		_minCost[i] = new int[_size];
@@ -29,7 +30,7 @@ void TestBoard::Initialize()
 
 		if (i % 2 == 0) continue;
 
-		for (int j = 1; j < _size; j += 2) _road[i][j] = RoadType::Road;
+		for (int j = 1; j < _size; j += 2) _road[i][j] = static_cast<bool>(ERoadType::Road);
 	}
 
 	makeEdge();
@@ -79,12 +80,12 @@ void TestBoard::makeRoad()
 
 		int row = (parent[curRow][curCol].first + curRow) / 2;
 		int col = (parent[curRow][curCol].second + curCol) / 2;
-		_road[row][col] = RoadType::Road;
+		_road[row][col] = static_cast<bool>(ERoadType::Road);
 
 		for (const EdgeInfo& next : _edge[curRow][curCol]) {
 			int nextRow = next.row, nextCol = next.col, nextCost = next.cost;
 
-			if (_visRoad[nextRow][nextCol] || _minCost[nextRow][nextCol] < curCost) continue;
+			if (_visRoad[nextRow][nextCol] || _minCost[nextRow][nextCol] < nextCost) continue;
 
 			parent[nextRow][nextCol] = { curRow, curCol };
 			_minCost[nextRow][nextCol] = nextCost;
