@@ -15,9 +15,9 @@ https://youtu.be/2EbZ3Bd1CDc
 ### 🎯주요 게임 기능
 설명|미로 생성
 :-:|:-:
-이미지|<img src="https://github.com/developerYHLee/MazeProject/assets/82407061/7cd5bf68-6e59-40f7-b151-8b2760e4ff93"/>
+이미지|![21](https://github.com/developerYHLee/MazeProject/assets/82407061/9c754914-6c71-4a21-9478-418e445f21b9)
 기능|입력한 크기의 미로 랜덤 생성
-활용 알고리즘|SideWinder 미로 생성
+활용 알고리즘|Prim 미로 생성
 
 <br></br>
 
@@ -86,12 +86,15 @@ https://github.com/developerYHLee/MazeProject/assets/82407061/c8934bf3-c06d-4068
       *  최단 경로를 탐색하고 경로 저장 후 저장된 경로를 활용하여 자동 이동
         <br></br>  
     *  세 가지 모두 이미 구현한 기능을 재사용해서 간단하게 새로운 기능 구현
+   
+   4. 미로 생성 알고리즘 변경
+      *  더 복잡한 미로 생성을 위해 SideWinder -> Prim 알고리즘으로 변경
+      *  TestBoard로 테스트 코드 작성 후 Board 코드 수정
 
 <br></br>
 
 ### 😁보완할 점
    * Board 클래스의 기능 사용 부분이나 StartGame 클래스의 Input 받는 기능을 따로 클래스로 분리 필요(추상화 부족)
-   * 더 복잡한 미로로 변경(Prim, Eller's 알고리즘)
    * 다채로운 기능 추가 필요(설명서, 퍼즐 요소 추가, 움직이는 문 등)
 
 <br></br>
