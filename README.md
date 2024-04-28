@@ -17,7 +17,7 @@ https://youtu.be/2EbZ3Bd1CDc
 :-:|:-:
 이미지|![21](https://github.com/developerYHLee/MazeProject/assets/82407061/9c754914-6c71-4a21-9478-418e445f21b9)
 기능|입력한 크기의 미로 랜덤 생성
-활용 알고리즘|Prim 미로 생성
+활용 알고리즘|Prim
 
 <br></br>
 
@@ -57,11 +57,6 @@ https://github.com/developerYHLee/MazeProject/assets/82407061/cd8125a8-9655-496c
 
 #### 전체 영상
 https://github.com/developerYHLee/MazeProject/assets/82407061/4eb23bb4-e1eb-4515-a121-67970bd808e3
-
-<br></br>
-
-#### 미로 크게 생성
-https://github.com/developerYHLee/MazeProject/assets/82407061/c8934bf3-c06d-4068-a1b1-c2406d8551c3
 
 <br></br>
 
