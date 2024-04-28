@@ -6,8 +6,8 @@
 #include <iostream>
 #include <ctime>
 #include <queue>
-#include <map>
 #include <climits>
+#include <algorithm>
 #include <vector>
 
 using namespace std;
@@ -19,34 +19,19 @@ class TestBoard {
 		Road
 	};
 
-	struct Pos {
-		int row, col;
-
-		Pos() { row = -1, col = -1; }
-		Pos(int row, int col) : row(row), col(col) {}
-
-		bool operator<(Pos o) const {
-			if (row == o.row) return col > o.col;
-			return row > o.row;
-		}
-	};
-
 	struct EdgeInfo
 	{
-		Pos pos;
-		int cost;
+		int row, col, cost;
 
-		EdgeInfo(Pos pos, int cost) : pos(pos), cost(cost) {}
+		EdgeInfo(int row, int col, int cost) : row(row), col(col), cost(cost) {}
 
-		bool operator<(EdgeInfo o) const { return cost > o.cost; }
+		bool operator<(const EdgeInfo& o) const { return cost > o.cost; }
 	};
 
 private:
-	int _size;
-	bool** _road;
-	map<Pos, bool> _visRoad;
-	map<Pos, int> _minCost;
-	map<Pos, vector<EdgeInfo>> _edge;
+	int _size, ** _minCost;
+	bool** _road, ** _visRoad;
+	vector<EdgeInfo>** _edge;
 
 	void Initialize();
 	void makeEdge();

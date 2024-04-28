@@ -33,7 +33,7 @@ private:
 		Pos() { row = -1, col = -1; }
 		Pos(int row, int col) : row(row), col(col) {}
 
-		bool operator<(Pos o) const {
+		bool operator<(const Pos& o) const {
 			if (row == o.row) return col > o.col;
 			return row > o.row;
 		}
@@ -46,7 +46,7 @@ private:
 
 		EdgeInfo(Pos pos, int cost) : pos(pos), cost(cost) {}
 
-		bool operator<(EdgeInfo o) const { return cost > o.cost; }
+		bool operator<(const EdgeInfo& o) const { return cost > o.cost; }
 	};
 
 	struct Path {
