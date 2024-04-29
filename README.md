@@ -3,7 +3,7 @@
 머릿속의 지도와 감각으로 미로를 탈출하는 텍스트 형식의 콘솔 게임
 
 ### 🎞실행 영상
-https://youtu.be/2EbZ3Bd1CDc
+[https://youtu.be/2EbZ3Bd1CDc](https://youtu.be/IyhybKq3UAs)
 <br></br>
 
 ### 📜게임 설명
