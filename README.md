@@ -44,22 +44,6 @@ https://youtu.be/2EbZ3Bd1CDc
 
 <br></br>
 
-### 🎞영상
-#### 게임 시작 전
-https://github.com/developerYHLee/MazeProject/assets/82407061/e1ab3d5a-5886-4a79-82af-d355b2e77d81
-
-<br></br>
-
-#### 자동 탈출
-https://github.com/developerYHLee/MazeProject/assets/82407061/cd8125a8-9655-496c-892c-e1b976497641
-
-<br></br>
-
-#### 전체 영상
-https://github.com/developerYHLee/MazeProject/assets/82407061/4eb23bb4-e1eb-4515-a121-67970bd808e3
-
-<br></br>
-
 ### 🔧노력한 부분
 * 기능별로 개발하도록 노력(객체화)
   *  효율적인 재사용성과 유지보수
